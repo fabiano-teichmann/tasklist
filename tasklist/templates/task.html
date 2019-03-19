@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Task list{% endblock %}
+
+
+    {% block content %}
+      <div class="col-md-5 offset-5">
+          <br>
+          <h3>Tarefa</h3>
+      </div>
+      <form class="form-group" method="post">
+
+            {% csrf_token %}
+              {{form.as_p}}
+
+         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Salvar</button>
+
+      </form>
+    {% endblock %}

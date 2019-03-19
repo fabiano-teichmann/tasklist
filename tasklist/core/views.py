@@ -1,26 +1,31 @@
 from django.shortcuts import render, redirect
 from django.utils.datetime_safe import datetime
 from django.views import generic
+
+from .forms import TaskListForm
 from .models import TaskList
 
 
 class HomeView(generic.ListView):
-    model = TaskList
-    template_name = 'list_task.html'
+    def get(self, request):
+        context = TaskList.objects.all()
+        return render(request, 'home.html', {'context': context})
 
 
 class CreateTaskListView(generic.CreateView):
     model = TaskList
-    template_name = 'create_task.html'
+    template_name = 'task.html'
+    form_class = TaskListForm
 
-    def post(self, request):
-        if request.POST:
-            form = request.data
-            post = self.model.create(title=form['title'], desc=form['desc'], status=form['status'])
-            post.save()
-            redirect('')
-        else:
-            return render(request, self.template_name)
+    def get(self, request):
+        form = TaskListForm
+        return render(request, 'task.html', {'form': form})
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.update_at = datetime.now()
+        post.save()
+        redirect('home')
 
 
 class EditTaskListView(generic.UpdateView):
