@@ -1,10 +1,10 @@
 from django.db import models
 
 STATUS = (
-    ('1', 'Backlog'),
-    ('2', 'A fazer'),
-    ('3', 'Fazendo'),
-    ('4', 'Feito')
+    ('Backlog', 'Backlog'),
+    ('A fazer', 'A fazer'),
+    ('Fazendo', 'Fazendo'),
+    ('Feito', 'Feito')
 )
 
 

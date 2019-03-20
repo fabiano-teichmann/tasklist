@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+<div class="col-xs-10 col-xs-offset-1">
+
+
+  {% block content %}
+      <table class="table">
+
+            <thead class="thead-light">
+
+                <th scope="col">Tarefa:</th>
+                <th scope="col">Status</th>
+                <th scope="col"> Criado: </th>
+                <th scope="col"><a href="/create" class="btn btn-outline-success my-2 my-sm-0"> Nova tarefa:</a></th>
+            </thead>
+            {%for c in context %}
+            <tr>
+
+                <th scope="col" >
+                    {{c.title}}</th>
+                <th scope="col">{{c.status}}</th>
+                <th scope="col">{{c.create_at}}</th>
+                <th scope="col">
+                    <a href="{%url 'edit' c.pk %}"><i class="fas fa-pencil-alt"></i> </a>
+                    <a href="{%url 'delete' c.pk %}"> <i class="fas fa-trash-alt"></i></a>
+                </th>
+
+            </tr>
+            {%endfor %}
+      </table>
+  {% endblock %}
+
+</div>

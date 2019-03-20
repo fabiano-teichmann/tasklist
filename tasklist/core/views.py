@@ -25,33 +25,29 @@ class CreateTaskListView(generic.CreateView):
         post = form.save(commit=False)
         post.update_at = datetime.now()
         post.save()
-        redirect('home')
+        return redirect('home')
 
 
 class EditTaskListView(generic.UpdateView):
     model = TaskList
-    template_name = 'create_task.html'
+    form_class = TaskListForm
+    template_name = 'task.html'
+    slug_field = 'id'
 
-    def post(self, request, slug):
-        if request.POST:
-            post = self.model.objects.get(id=slug)
-            form = request.data
-            post.title = form['title']
-            post.desc = form['desc']
-            post.status = form['status']
-            post.update_at = datetime.now()
-            post.save()
-            redirect('')
-        else:
-            return render(request, self.template_name)
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.update_at = datetime.now()
+        post.save()
+        return redirect('home')
 
 
 class DeleteTaskListView(generic.DeleteView):
     model = TaskList
     template_name = 'delete_task.html'
+    slug_field = 'id'
 
     def get(self, request, slug):
         post = self.model.objects.get(id=slug).delete()
-        redirect('')
+        return redirect('home')
 
 
